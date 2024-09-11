@@ -8,7 +8,7 @@ import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   private users: User[] = [
     {
@@ -24,8 +24,8 @@ export class UserService {
       username: 'user2',
       name: 'User 2',
       password: 'user2',
-    }
-  ]
+    },
+  ];
 
   // Crear un nuevo usuario
   async createUser(createUserDto: CreateUserDto) {
@@ -51,7 +51,7 @@ export class UserService {
   }
 
   async findOneByUsername(username: string) {
-    const testUser = this.users.find(user => user.username === username);
+    const testUser = this.users.find((user) => user.username === username);
     if (!testUser) {
       throw new NotFoundException(`User with username ${username} not found`);
     }
