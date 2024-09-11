@@ -8,12 +8,12 @@ export class TeamsController {
   }
 
   @Post()
-  createTeam(@Body() teamDto: any) {
+  createTeam(@Body() _teamDto: any) {
     return 'Post teams';
   }
 
   @Put(':id')
-  updateTeam(@Param('id') id: string, @Body() teamDto: any) {
+  updateTeam(@Param('id') id: string, @Body() _teamDto: any) {
     return `Put id: ${id} team`;
   }
 }

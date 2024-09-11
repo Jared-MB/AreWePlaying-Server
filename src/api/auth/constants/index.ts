@@ -1,1 +1,1 @@
-export * from './jwtSecret'
+export * from './jwtSecret';

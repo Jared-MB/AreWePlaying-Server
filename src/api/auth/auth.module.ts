@@ -18,10 +18,15 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, {
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  },],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
   exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

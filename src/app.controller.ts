@@ -7,8 +7,7 @@ import { Public } from './decorators';
 
 @Controller()
 export class AppController {
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Public()
   @UseGuards(LocalAuthGuard)
@@ -26,7 +25,7 @@ export class AppController {
   @Get('health-check')
   healthCheck(@Res() res: Response) {
     return res.json({
-      status: 'ok'
-    })
+      status: 'ok',
+    });
   }
 }

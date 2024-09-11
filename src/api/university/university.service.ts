@@ -2,7 +2,7 @@
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../services/prisma.service';
-import { CreateUniversityDto} from './dto/create-university.dto';
+import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 
 @Injectable()
@@ -33,7 +33,8 @@ export class UniversityService {
         teams: true,
       },
     });
-    if (!university) throw new NotFoundException(`University with ID ${id} not found`);
+    if (!university)
+      throw new NotFoundException(`University with ID ${id} not found`);
     return university;
   }
 
@@ -43,7 +44,8 @@ export class UniversityService {
       where: { id },
       data,
     });
-    if (!university) throw new NotFoundException(`University with ID ${id} not found`);
+    if (!university)
+      throw new NotFoundException(`University with ID ${id} not found`);
     return university;
   }
 
@@ -52,7 +54,8 @@ export class UniversityService {
     const university = await this.prisma.university.delete({
       where: { id },
     });
-    if (!university) throw new NotFoundException(`University with ID ${id} not found`);
+    if (!university)
+      throw new NotFoundException(`University with ID ${id} not found`);
     return university;
   }
 }

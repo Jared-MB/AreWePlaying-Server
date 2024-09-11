@@ -17,9 +17,9 @@ import { MatchesModule } from './api/matches/matches.module';
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
