@@ -1,7 +1,7 @@
 // university.service.ts
 
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../services/prisma.service';
+import { PrismaService } from '../../services/prisma.service';
 import { CreateUniversityDto} from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 
