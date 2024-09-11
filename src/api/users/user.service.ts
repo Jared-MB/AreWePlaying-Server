@@ -1,13 +1,31 @@
 // src/user/user.service.ts
 
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../services/prisma.service';
+import { PrismaService } from 'src/services/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
+
+  private users: User[] = [
+    {
+      id: 1,
+      email: 'user1@example.com',
+      username: 'user1',
+      name: 'User 1',
+      password: 'user1',
+    },
+    {
+      id: 2,
+      email: 'user2@example.com',
+      username: 'user2',
+      name: 'User 2',
+      password: 'user2',
+    }
+  ]
 
   // Crear un nuevo usuario
   async createUser(createUserDto: CreateUserDto) {
@@ -22,7 +40,7 @@ export class UserService {
   }
 
   // Obtener un usuario por ID
-  async findOne(id: number) {
+  async findOneById(id: number) {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
@@ -30,6 +48,23 @@ export class UserService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
     return user;
+  }
+
+  async findOneByUsername(username: string) {
+    const testUser = this.users.find(user => user.username === username);
+    if (!testUser) {
+      throw new NotFoundException(`User with username ${username} not found`);
+    }
+    return testUser;
+
+    // COMMENTED OUT FOR TESTING
+    // const user = await this.prisma.user.findUnique({
+    //   where: { username },
+    // });
+    // if (!user) {
+    //   throw new NotFoundException(`User with username ${username} not found`);
+    // }
+    // return user;
   }
 
   // Actualizar un usuario por ID
