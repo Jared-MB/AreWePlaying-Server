@@ -7,11 +7,11 @@ export class MatchesController {
     return 'Se muestran los matches';
   }
   @Post()
-  createMatch(@Body() matchDto: any) {
+  createMatch(@Body() _matchDto: any) {
     return 'match creado';
   }
   @Put(':id')
-  updateMatch(@Param('id') id: string, @Body() matchDto: any) {
+  updateMatch(@Param('id') id: string, @Body() _matchDto: any) {
     return `actualizando el id: ${id} `;
   }
 }
