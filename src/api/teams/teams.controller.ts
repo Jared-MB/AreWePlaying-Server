@@ -1,19 +1,42 @@
-import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+import { TeamsService } from './teams.service';
+import { CreateTeamDto } from './dto/create-team.dto';
+import { UpdateTeamDto } from './dto/update-team.dto';
 
 @Controller('teams')
 export class TeamsController {
+  constructor(private readonly teamService: TeamsService) {}
+
   @Get()
-  getAllTeams() {
-    return 'Get teams';
+  findAll() {
+    return this.teamService.getTeams();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.teamService.getTeamById(+id);
   }
 
   @Post()
-  createTeam(@Body() _teamDto: any) {
-    return 'Post teams';
+  createTeam(@Body() createTeamDto: CreateTeamDto) {
+    return this.teamService.createTeam(createTeamDto);
   }
 
-  @Put(':id')
-  updateTeam(@Param('id') id: string, @Body() _teamDto: any) {
-    return `Put id: ${id} team`;
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
+    return this.teamService.updateTeam(+id, updateTeamDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.teamService.deleteTeam(+id);
   }
 }
