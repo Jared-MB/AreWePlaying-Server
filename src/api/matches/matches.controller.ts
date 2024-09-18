@@ -10,7 +10,9 @@ import {
 import { MatchesService } from './matches.service';
 import { CreateMatchtDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
+import { Public } from 'src/decorators';
 
+@Public()
 @Controller('matches')
 export class MatchesController {
   constructor(private readonly matchService: MatchesService) {}
