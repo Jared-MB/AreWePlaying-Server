@@ -1,19 +1,44 @@
-import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+import { MatchesService } from './matches.service';
+import { CreateMatchtDto } from './dto/create-match.dto';
+import { UpdateMatchDto } from './dto/update-match.dto';
 import { Public } from 'src/decorators';
 
 @Public()
 @Controller('matches')
 export class MatchesController {
-  @Get()
-  getAllMatches() {
-    return 'Se muestran los matches';
-  }
+  constructor(private readonly matchService: MatchesService) {}
+
   @Post()
-  createMatch(@Body() _matchDto: any) {
-    return 'match creado';
+  createMatch(@Body() createMatchDto: CreateMatchtDto) {
+    return this.matchService.createMatch(createMatchDto);
   }
-  @Put(':id')
-  updateMatch(@Param('id') id: string, @Body() _matchDto: any) {
-    return `actualizando el id: ${id} `;
+
+  @Get()
+  findAll() {
+    return this.matchService.getMatches();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.matchService.findOneById(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateMatchDto: UpdateMatchDto) {
+    return this.matchService.updateMatch(+id, updateMatchDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.matchService.remove(+id);
   }
 }
