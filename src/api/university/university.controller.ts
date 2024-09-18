@@ -12,7 +12,9 @@ import {
 import { UniversityService } from './university.service';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
+import { Public } from 'src/decorators';
 
+@Public()
 @Controller('universities')
 export class UniversityController {
   constructor(private readonly universityService: UniversityService) {}

@@ -10,7 +10,9 @@ import {
 import { SportService } from './sport.service';
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
+import { Public } from 'src/decorators';
 
+@Public()
 @Controller('sport')
 export class SportController {
   constructor(private readonly sportService: SportService) {}

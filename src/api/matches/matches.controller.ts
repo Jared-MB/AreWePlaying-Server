@@ -1,5 +1,7 @@
 import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
+import { Public } from 'src/decorators';
 
+@Public()
 @Controller('matches')
 export class MatchesController {
   @Get()
