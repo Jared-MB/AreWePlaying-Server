@@ -10,7 +10,9 @@ import {
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
+import { Public } from 'src/decorators';
 
+@Public()
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamService: TeamsService) {}
