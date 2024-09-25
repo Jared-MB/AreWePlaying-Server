@@ -22,6 +22,7 @@ export class AppController {
     return req.user;
   }
 
+  @Public()
   @Get('health-check')
   healthCheck(@Res() res: Response) {
     return res.json({
