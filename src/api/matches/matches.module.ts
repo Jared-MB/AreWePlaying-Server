@@ -4,7 +4,7 @@ import { MatchesController } from './matches.controller';
 import { PrismaService } from 'src/services';
 
 @Module({
-  providers: [MatchesService,PrismaService],
+  providers: [MatchesService, PrismaService],
   controllers: [MatchesController],
 })
 export class MatchesModule {}

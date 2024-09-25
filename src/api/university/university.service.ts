@@ -44,9 +44,7 @@ export class UniversityService {
       where: { id },
       data,
     });
-    if (!university)
-      throw new NotFoundException(`University with ID ${id} not found`);
-    return university;
+    return university; // No es necesario lanzar NotFoundException aquí.
   }
 
   // Eliminar una universidad por su ID
@@ -54,8 +52,6 @@ export class UniversityService {
     const university = await this.prisma.university.delete({
       where: { id },
     });
-    if (!university)
-      throw new NotFoundException(`University with ID ${id} not found`);
     return university;
   }
 }

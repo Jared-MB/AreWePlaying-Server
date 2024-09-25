@@ -14,7 +14,6 @@ import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 import { Public } from 'src/decorators';
 
-@Public()
 @Controller('universities')
 export class UniversityController {
   constructor(private readonly universityService: UniversityService) {}
@@ -24,11 +23,13 @@ export class UniversityController {
     return this.universityService.createUniversity(createUniversityDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.universityService.getUniversities();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.universityService.getUniversityById(+id);

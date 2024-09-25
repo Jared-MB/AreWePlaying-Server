@@ -12,7 +12,6 @@ import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
 import { Public } from 'src/decorators';
 
-@Public()
 @Controller('sport')
 export class SportController {
   constructor(private readonly sportService: SportService) {}
@@ -22,11 +21,13 @@ export class SportController {
     return this.sportService.createSport(createSportDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.sportService.getSports();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.sportService.getSportsById(+id);
