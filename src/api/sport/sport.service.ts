@@ -37,7 +37,6 @@ export class SportService {
       where: { id },
       data,
     });
-    if (!sport) throw new NotFoundException(`Sport with ID ${id} not found`);
     return sport;
   }
 
@@ -45,7 +44,6 @@ export class SportService {
     const sport = await this.prisma.sport.delete({
       where: { id },
     });
-    if (!sport) throw new NotFoundException(`Sport with ID ${id} not found`);
     return sport;
   }
 }
