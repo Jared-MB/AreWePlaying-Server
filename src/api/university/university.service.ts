@@ -1,6 +1,6 @@
 // university.service.ts
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../services/prisma.service';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
@@ -11,9 +11,18 @@ export class UniversityService {
 
   // Crear una nueva universidad
   async createUniversity(data: CreateUniversityDto) {
-    return await this.prisma.university.create({
-      data,
-    });
+    try{
+      return await this.prisma.university.create({
+        data,
+      });
+    } catch (error) {
+      if (error.code === 'P2002') {
+        throw new ConflictException(
+          `University with name "${data.name}" already exists`,
+        );
+      }
+      throw error;
+    }
   }
 
   // Obtener todas las universidades
