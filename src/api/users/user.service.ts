@@ -51,7 +51,9 @@ export class UserService {
   }
 
   async findOneByUsername(username: string) {
-    const testUser = this.users.find((user) => user.username === username);
+    const testUser = await this.prisma.user.findUnique({
+      where: { username },
+    });
     if (!testUser) {
       throw new NotFoundException(`User with username ${username} not found`);
     }
