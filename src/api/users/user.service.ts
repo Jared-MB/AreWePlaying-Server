@@ -69,6 +69,25 @@ export class UserService {
     // return user;
   }
 
+  async findOneByEmail(email: string) {
+    const testUser = await this.prisma.user.findUnique({
+      where: { email },
+    });
+    if (!testUser) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+    return testUser;
+
+    // COMMENTED OUT FOR TESTING
+    // const user = await this.prisma.user.findUnique({
+    //   where: { username },
+    // });
+    // if (!user) {
+    //   throw new NotFoundException(`User with username ${username} not found`);
+    // }
+    // return user;
+  }
+
   // Actualizar un usuario por ID
   async updateUser(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.prisma.user.update({
