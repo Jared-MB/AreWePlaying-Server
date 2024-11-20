@@ -14,7 +14,13 @@ export class MatchesService {
   }
 
   async getMatches() {
-    return await this.prisma.match.findMany({});
+    return await this.prisma.match.findMany({
+      include: {
+        localTeam: true,
+        visitorTeam: true,
+        sport: true,
+      },
+    });
   }
 
   async findOneById(id: number) {
