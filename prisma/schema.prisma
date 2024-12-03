@@ -8,81 +8,82 @@ datasource db {
 }
 
 model User {
-  id             Int             @id @default(autoincrement())
-  email          String          @unique @db.VarChar(255)
-  username       String          @unique @db.VarChar(20)
-  name           String          @db.VarChar(255)
-  password       String          @db.VarChar(255)
-  notifications  Notification[]
-  comments       Comment[]
+  id            Int            @id @default(autoincrement())
+  email         String         @unique @db.VarChar(255)
+  username      String         @unique @db.VarChar(20)
+  name          String         @db.VarChar(255)
+  password      String         @db.VarChar(255)
+  notifications Notification[]
+  comments      Comment[]
 }
 
 model Viewer {
-  id        Int      @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   visitDate DateTime
   matches   ViewerMatch[]
 }
 
 model Match {
-  id          Int      @id @default(autoincrement())
-  localTeam   Team     @relation(name: "LocalTeam", fields: [localTeamId], references: [id])
-  visitorTeam Team     @relation(name: "VisitorTeam", fields: [visitorTeamId], references: [id])
-  date        DateTime
-  hour        String   @db.VarChar(5)  // Assuming time in HH:MM format
-  location    String   @db.VarChar(255)
-  gender      String   @db.VarChar(10) // Assuming male/female for gender
-  sport       Sport    @relation(fields: [sportId], references: [id])
-  sportId     Int
-  localTeamId Int
+  id            Int            @id @default(autoincrement())
+  localTeam     Team           @relation(name: "LocalTeam", fields: [localTeamId], references: [id])
+  visitorTeam   Team           @relation(name: "VisitorTeam", fields: [visitorTeamId], references: [id])
+  date          DateTime
+  hour          String         @db.VarChar(5) // Assuming time in HH:MM format
+  location      String         @db.VarChar(255)
+  gender        String         @db.VarChar(10) // Assuming male/female for gender
+  sport         Sport          @relation(fields: [sportId], references: [id])
+  sportId       Int
+  localTeamId   Int
   visitorTeamId Int
-  comments    Comment[]
-  viewers     ViewerMatch[]
+  comments      Comment[]
+  viewers       ViewerMatch[]
+  Notification  Notification[]
 }
 
 model Sport {
   id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(255) @unique
+  name    String  @unique @db.VarChar(255)
   matches Match[]
 }
 
 model Team {
-  id             Int      @id @default(autoincrement())
+  id             Int        @id @default(autoincrement())
   university     University @relation(fields: [universityId], references: [id])
-  name           String   @db.VarChar(255)
-  logo           String   @db.VarChar(255) // Assuming logo URL or path
-  matchesLocal   Match[]  @relation(name: "LocalTeam")
-  matchesVisitor Match[]  @relation(name: "VisitorTeam")
+  name           String     @db.VarChar(255)
+  logo           String     @db.VarChar(255) // Assuming logo URL or path
+  matchesLocal   Match[]    @relation(name: "LocalTeam")
+  matchesVisitor Match[]    @relation(name: "VisitorTeam")
   universityId   Int
 }
 
 model University {
-  id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(255) @unique
-  teams   Team[]
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(255)
+  teams Team[]
 }
 
 model Notification {
-  id               Int    @id @default(autoincrement())
-  user             User   @relation(fields: [userId], references: [id])
-  userId           Int
-  phoneNumber      String @db.VarChar(15) // E.164 format
-  notificationType String @db.VarChar(50) 
-  status           String @db.VarChar(50) 
+  id       Int     @id @default(autoincrement())
+  match    Match   @relation(fields: [matchId], references: [id])
+  matchId  Int
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int
+  isActive Boolean @default(true)
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
-  content    String   @db.Text
-  match      Match    @relation(fields: [matchId], references: [id])
-  matchId    Int
-  user       User?    @relation(fields: [userId], references: [id])
-  userId     Int?
+  id      Int    @id @default(autoincrement())
+  content String @db.Text
+  match   Match  @relation(fields: [matchId], references: [id])
+  matchId Int
+  user    User?  @relation(fields: [userId], references: [id])
+  userId  Int?
 }
 
 model ViewerMatch {
-  id        Int      @id @default(autoincrement())
-  viewer    Viewer   @relation(fields: [viewerId], references: [id])
-  viewerId  Int
-  match     Match    @relation(fields: [matchId], references: [id])
-  matchId   Int
+  id       Int    @id @default(autoincrement())
+  viewer   Viewer @relation(fields: [viewerId], references: [id])
+  viewerId Int
+  match    Match  @relation(fields: [matchId], references: [id])
+  matchId  Int
 }

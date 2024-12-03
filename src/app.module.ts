@@ -7,19 +7,23 @@ import { UniversityModule } from './api/university/university.module';
 import { MatchesModule } from './api/matches/matches.module';
 import { SportModule } from './api/sport/sport.module';
 import { TeamsModule } from './api/teams/teams.module';
+import { NotificationsModule } from './api/notifications/notifications.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+    ScheduleModule.forRoot(),
     AuthModule,
     UsersModule,
     UniversityModule,
     TeamsModule,
     MatchesModule,
-    ConfigModule.forRoot({
-      envFilePath: '.env',
-      isGlobal: true,
-    }),
     SportModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [],

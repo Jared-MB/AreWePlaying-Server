@@ -6,5 +6,6 @@ import { PrismaService } from 'src/services';
 @Module({
   providers: [MatchesService, PrismaService],
   controllers: [MatchesController],
+  exports: [MatchesService],
 })
 export class MatchesModule {}

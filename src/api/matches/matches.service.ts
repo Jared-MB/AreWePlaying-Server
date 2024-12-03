@@ -13,12 +13,56 @@ export class MatchesService {
     });
   }
 
-  async getMatches() {
+  async getMatches({
+    sport,
+    date = {} as any,
+    category,
+  }: {
+    sport?: number;
+    date?:
+      | {
+          from: Date;
+          to: Date;
+        }
+      | {
+          from: Date;
+        };
+    category?: string;
+  }) {
     return await this.prisma.match.findMany({
       include: {
         localTeam: true,
         visitorTeam: true,
         sport: true,
+      },
+      where: {
+        gender: category,
+        date: {
+          gte: date?.from,
+          lte: 'to' in date ? date.to : (date.from ?? undefined),
+        },
+        sport: {
+          id: sport,
+        },
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
+  }
+
+  async getByDateRange(from: Date, to: Date) {
+    return await this.prisma.match.findMany({
+      include: {
+        localTeam: true,
+        visitorTeam: true,
+        sport: true,
+      },
+      where: {
+        date: {
+          gte: from,
+          lt: to,
+        },
       },
     });
   }

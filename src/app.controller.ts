@@ -1,13 +1,25 @@
-import { Controller, Get, Post, Request, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Headers,
+  Post,
+  Request,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './api/auth/services/auth.service';
 import { LocalAuthGuard } from './api/auth/guards/local-auth.guard';
 import { JwtAuthGuard } from './api/auth/guards/jwt-auth.guard';
 import { Public } from './decorators';
+import { UserService } from './api/users/user.service';
 
 @Controller()
 export class AppController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Public()
@@ -18,8 +30,10 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  async getProfile(@Headers('authorization') authorization: string) {
+    const token = authorization.split(' ')[1];
+    const user = await this.authService.validateToken(token);
+    return this.userService.findOneByUsername(user.username);
   }
 
   @Public()

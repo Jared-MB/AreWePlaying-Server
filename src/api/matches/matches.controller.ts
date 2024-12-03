@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { MatchesService } from './matches.service';
 import { CreateMatchtDto } from './dto/create-match.dto';
@@ -23,8 +24,20 @@ export class MatchesController {
   }
 
   @Get()
-  findAll() {
-    return this.matchService.getMatches();
+  findAll(
+    @Query() query: { deporte?: string; fecha?: string; categoria?: string },
+  ) {
+    const date = query.fecha ? JSON.parse(query.fecha) : undefined;
+
+    const sport = isNaN(Number(query.deporte))
+      ? undefined
+      : Number(query.deporte);
+
+    return this.matchService.getMatches({
+      date,
+      sport,
+      category: query.categoria,
+    });
   }
 
   @Get(':id')
