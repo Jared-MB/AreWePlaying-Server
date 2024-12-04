@@ -36,6 +36,12 @@ export class AppController {
     return this.userService.findOneByUsername(user.username);
   }
 
+  @Get('verify-token')
+  async verifyToken(@Headers('authorization') authorization: string) {
+    const token = authorization.split(' ')[1];
+    return this.authService.validateToken(token);
+  }
+
   @Public()
   @Get('health-check')
   healthCheck(@Res() res: Response) {
